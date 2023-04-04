@@ -22,6 +22,7 @@ QSize sizeHint() const override;
 QSize minimumSizeHint() const override;
 void setHeldPieceLabel(QLabel *label);
 void setNextPieceLabel(QLabel *label);
+void drawSquare(QPainter &painter, int x, int y, TetrisShape shape);
 
 public slots:
 void startGame();
@@ -46,7 +47,7 @@ int squareWidth() { return contentsRect().width() / BoardWidth; }
 void createNewPiece();
 void removeFullLines();
 void pieceDropped(int dropHeight);
-void drawSquare(QPainter &painter, int x, int y, TetrisShape shape);
+
 void dropCurrentPiece();
 void clearBoard();
 bool tryMove(const TetrisPiece &newPiece, int newX, int newY);

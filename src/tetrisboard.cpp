@@ -112,6 +112,7 @@ void TetrisBoard::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     QRect rect = contentsRect();
 
+
     int boardTop = rect.bottom() - BoardHeight*squareHeight(); //calcul de la position du haut de la grille de jeu
     for (int i = 0; i < BoardHeight; ++i) {
         for (int j = 0; j < BoardWidth; ++j) {
