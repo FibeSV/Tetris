@@ -1,10 +1,12 @@
-QT += widgets
+QT += widgets core gui network
 
 HEADERS       = tetrisboard.h \
+                multiplayerblock.h \
                 playerwidget.h \
                 tetrispiece.h \
                 tetriswindow.h
 SOURCES       = main.cpp \
+                multiplayerblock.cpp \
                 playerwidget.cpp \
                 tetrisboard.cpp \
                 tetrispiece.cpp \

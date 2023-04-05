@@ -1,6 +1,7 @@
 #include "tetriswindow.h"
 #include "tetrisboard.h"
 #include "playerwidget.h"
+#include "multiplayerblock.h"
 #include <QPainter>
 #include <QtWidgets>
 #include <QCoreApplication>
@@ -31,7 +32,7 @@ TetrisWindow::TetrisWindow(QWidget *parent) : QWidget(parent), board(new TetrisB
     lignes ->setSegmentStyle(QLCDNumber::Filled);
 
     //TetrisBoard *myboard = new TetrisBoard;
-
+    MultiplayerBlock *my_block = new MultiplayerBlock;
 
     //ici on crée des boutons quit, start, pause aux fonctionalités respectives pour faciliter l'experience de l'utilisateur.
     start = new QPushButton(tr("&Commencer"));
@@ -49,10 +50,13 @@ TetrisWindow::TetrisWindow(QWidget *parent) : QWidget(parent), board(new TetrisB
     connect(quit , &QPushButton::clicked, qApp, &QCoreApplication::quit);
     connect(pause, &QPushButton::clicked, board, &TetrisBoard::pauseGame);
     connect(board, &TetrisBoard::scoreChange, score, qOverload<int>(&QLCDNumber::display));
+    connect(board, &TetrisBoard::scoreChange, my_block, &MultiplayerBlock::SendToServer);
     connect(board, &TetrisBoard::lignesChange, lignes, qOverload<int>(&QLCDNumber::display));
 
 
-    playerwidget *newplayer = new playerwidget;
+    //playerwidget *newplayer = new playerwidget;
+    my_block->SendToServer(100500);
+    qDebug() << "sented";
 
     QGridLayout *layout = new QGridLayout; //need to change some values here.
 
@@ -69,7 +73,8 @@ TetrisWindow::TetrisWindow(QWidget *parent) : QWidget(parent), board(new TetrisB
     layout->addWidget(quit, 4, 2);
     layout->addWidget(pause, 5, 2);
     //layout->addWidget(myboard, 0,3);
-    layout->addWidget(newplayer, 0,3);
+    //layout->addWidget(newplayer, 0,3);
+    layout->addWidget(my_block,0,3);
     setLayout(layout);
 
     setWindowTitle(tr("TETRIS"));

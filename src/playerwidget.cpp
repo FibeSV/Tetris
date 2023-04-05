@@ -14,7 +14,6 @@ playerwidget::playerwidget(QWidget *parent) :
     player_name->setFont(QFont("8514OEM", 15, QFont::Bold));
     player_name->setStyleSheet("color: #fac898;");
 
-
     player_score = new QLCDNumber(5);
     player_score->display(999999);
 
@@ -24,8 +23,19 @@ playerwidget::playerwidget(QWidget *parent) :
     layout->addWidget(player_score, 1, 0);
     setLayout(layout);
 
-    setStyleSheet("background-color: #2aa198;");
+    //setStyleSheet("background-color: #2aa198;");
 
+}
+void playerwidget::set_name(QString str){
+    this->name = str;
+    player_name->setText(str);
+
+}
+
+void playerwidget::set_score(int num)
+{
+    this->score = num;
+    player_score->display(num);
 }
 
 playerwidget::~playerwidget()
