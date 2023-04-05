@@ -105,7 +105,12 @@ De manière similaire, lorsque le serveur reçoit des données d'un client, la m
 | c           | Holds the piece                           |
 | Up/Shift    | Rotates piece counter-clockwise/clockwise |
 
-## Usage
+## How to compile:
+### Étapes pour compiler et exécuter le projet
+* Installer les outils de développement Qt : Assurez-vous d'avoir installé les outils de développement Qt sur votre système. Vous pouvez les télécharger à partir du site officiel de Qt : https://www.qt.io/download
+* Exécuter qmake : Exécutez la commande qmake pour générer le fichier Makefile à partir du fichier de projet .pro. Si vous utilisez une version spécifique de Qt, vous devrez peut-être spécifier le chemin complet vers l'exécutable qmake.
+* Compiler le projet : Compilez le projet en utilisant la commande make (ou nmake sur Windows avec Visual Studio). Ceci va compiler le code source et créer l'exécutable du projet.
+* Exécuter l'application 
 
 
 
