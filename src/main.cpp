@@ -10,7 +10,8 @@ int main(int argc, char *argv[])
     TetrisWindow twindow;
     MainMenu window(&twindow);
 
-    QPixmap logoPixmap("C:/Users/Pinata/Desktop/ENSTA/TETRIS/Tetris_Syoma_Q/tetrix/TETRISV2/TETRISV2/Tetris.jpg");
+    QPixmap logoPixmap(":/img/Tetris.jpg");
+    //qDebug() << QDir::toNativeSeparators(QApplication::applicationDirPath()) + ".../images/Tetris.jpg";
     window.setWindowIcon(QIcon(logoPixmap));
 
     window.show();

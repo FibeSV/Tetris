@@ -24,7 +24,7 @@ TetrisWindow::TetrisWindow(QWidget *parent) : QWidget(parent), board(new TetrisB
     nextPieceLabel->setFrameStyle(QFrame::Box | QFrame::Raised);
     nextPieceLabel->setAlignment(Qt::AlignCenter);
     nextPieceLabel->setFont(QFont("8514OEM", 20, QFont::Bold));
-    nextPieceLabel->setStyleSheet("color: #fac898;");
+    nextPieceLabel->setStyleSheet("background-color: white; border: 3px orange");
     board->setNextPieceLabel(nextPieceLabel);
 
  /*  levelLabel = new QLabel(this);
@@ -37,26 +37,28 @@ TetrisWindow::TetrisWindow(QWidget *parent) : QWidget(parent), board(new TetrisB
     heldPieceLabel->setFrameStyle(QFrame::Box | QFrame::Raised);
     heldPieceLabel->setAlignment(Qt::AlignCenter);
     heldPieceLabel->setFont(QFont("8514OEM", 20, QFont::Bold));
-    heldPieceLabel->setStyleSheet("color: #fac898;");
+    heldPieceLabel->setStyleSheet("background-color: white; border: 2px orange");
     board->setHeldPieceLabel(heldPieceLabel);
 
     score = new QLCDNumber(5);// cela correspond à l'affichage du score en jeu
     score->setSegmentStyle(QLCDNumber::Filled);
+    score->setStyleSheet("background-color: white; border: 3px orange");
     lignes = new QLCDNumber(5);//
     lignes ->setSegmentStyle(QLCDNumber::Filled);
+    lignes->setStyleSheet("background-color: white; border: 3px orange");
 
 
 
     //ici on crée des boutons quit, start, pause aux fonctionalités respectives pour faciliter l'experience de l'utilisateur.
     start = new QPushButton(tr("&Commencer"));
     start->setFocusPolicy(Qt::NoFocus); //Ici on a mis NoFocus car on ne veut pas que ces boutons prennent le dessus sur le jeu au niveau des entrées clavier.
-    start->setStyleSheet("font-size: 20px; color: #fac898; font-family: 8514OEM;");
+    start->setStyleSheet("font-size: 20px; color: black; font-family: 8514OEM;");
     quit = new QPushButton(tr("&Quitter"));
     quit->setFocusPolicy(Qt::NoFocus);
-    quit->setStyleSheet("font-size: 20px; color: #fac898; font-family: 8514OEM;");
+    quit->setStyleSheet("font-size: 20px; color: black; font-family: 8514OEM;");
     pause = new QPushButton(tr("&Pause"));
     pause->setFocusPolicy(Qt::NoFocus);
-    pause->setStyleSheet("font-size: 20px; color: #fac898; font-family: 8514OEM;");
+    pause->setStyleSheet("font-size: 20px; color: black; font-family: 8514OEM;");
 
     //Ici on associe les boutons créés au dessus avec les fonctionalités respectives.
     connect(start, &QPushButton::clicked, board, &TetrisBoard::startGame);
@@ -88,9 +90,12 @@ TetrisWindow::TetrisWindow(QWidget *parent) : QWidget(parent), board(new TetrisB
     setLayout(mlayout);
 
     setWindowTitle(tr("TETRIS"));
-    resize(600, 350);
-    setStyleSheet("background-color: #2aa198;");
-    qDebug() << "init";
+    resize(760, 500);
+    QPixmap bkgnd(":/img/bg2.png");
+    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
+    QPalette palette;
+    palette.setBrush(QPalette::Window, bkgnd);
+    this->setPalette(palette);
 
 }
 
@@ -99,6 +104,7 @@ void TetrisWindow::Connect(QString name,QString hostname,int port)
 {
     my_block = new MultiplayerBlock(name, hostname, port);
     connect(board, &TetrisBoard::scoreChange, my_block, &MultiplayerBlock::SendToServer);
+    my_block->setFixedWidth(150);
     mlayout->addWidget(my_block);
 }
 

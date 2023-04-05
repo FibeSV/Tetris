@@ -22,7 +22,7 @@ playerwidget::playerwidget(QWidget *parent) :
     layout->addWidget(player_name, 0, 0);
     layout->addWidget(player_score, 1, 0);
     setLayout(layout);
-
+    this->setFixedHeight(100);
     //setStyleSheet("background-color: #2aa198;");
 
 }

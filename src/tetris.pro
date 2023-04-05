@@ -20,3 +20,6 @@ INSTALLS += target
 
 FORMS += \
     mainmenu.ui
+
+RESOURCES += \
+    res.qrc

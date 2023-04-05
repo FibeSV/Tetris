@@ -10,8 +10,12 @@ MainMenu::MainMenu(TetrisWindow *window,QWidget *parent) :
     twindow = window;
 
     setWindowTitle(tr("TETRIS"));
-    resize(600, 350);
-    //setStyleSheet("background-color: #2aa198;");
+    resize(760, 500);
+    QPixmap bkgnd(":/img/img/bg1.png");
+    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
+    QPalette palette;
+    palette.setBrush(QPalette::Window, bkgnd);
+    this->setPalette(palette);
 }
 
 MainMenu::~MainMenu()
