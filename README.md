@@ -65,13 +65,13 @@ Dans cette approche, la classe _TetrisBoard_ est la plus complexe, car elle gèr
 ![single-player](images\singleplayer.jpg)
 
 
-![multiplayer:player1](images\player1.jpg)
+![multiplayer:player1](/images/player1.jpg)
 
-![multiplayer:player2](images\player2.jpg)
+![multiplayer:player2](/images/player2.jpg)
 
-![multiplayer:player3](images\player3.jpg)
+![multiplayer:player3](/images/player3.jpg)
 
-![multiplayer:player4](images\player4.jpg)
+![multiplayer:player4](/images/player4.jpg)
 
 ## Controls
 
