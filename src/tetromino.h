@@ -1,12 +1,12 @@
-#ifndef TETRISPIECE_H
-#define TETRISPIECE_H
+#ifndef TETROMINO_H
+#define TETROMINO_H
 
 enum TetrisShape { NoShape,Z,S,I,T,O,L,J };
-class TetrisPiece
+class Tetromino
 {
 
 public:
-    TetrisPiece() { setShape(NoShape); }//lors de sa création la pièce n'a pas de forme, cela facilite leur manipulation.
+    Tetromino() { setShape(NoShape); }//lors de sa création la pièce n'a pas de forme, cela facilite leur manipulation.
     void setRandomShape();
     void setShape(TetrisShape shape);
 
@@ -19,7 +19,7 @@ public:
     int minY() const;
     int maxY() const;
 
-    TetrisPiece rotatedLeft() const; //les deux fonctions pour faire tourner les pièces.
+    Tetromino rotatedLeft() const; //les deux fonctions pour faire tourner les pièces.
 
 private:// ici on définit les 4 blocs qui constituent une pièce
     void setX(int index, int x) { coords[index][0] = x; }
