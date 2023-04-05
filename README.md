@@ -59,10 +59,10 @@ Dans cette approche, la classe _TetrisBoard_ est la plus complexe, car elle gèr
 
 ## Screenshots
 
-![main-menu](images\main_menu.jpg)
+![main-menu](/images/main_menu.jpg)
 
 
-![single-player](images\singleplayer.jpg)
+![single-player](/images/singleplayer.jpg)
 
 
 ![multiplayer:player1](/images/player1.jpg)
