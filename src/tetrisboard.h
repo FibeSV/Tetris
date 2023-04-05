@@ -22,6 +22,7 @@ QSize sizeHint() const override;
 QSize minimumSizeHint() const override;
 void setHeldPieceLabel(QLabel *label);
 void setNextPieceLabel(QLabel *label);
+void drawSquare(QPainter &painter, int x, int y, TetrisShape shape);
 
 public slots:
 void startGame();

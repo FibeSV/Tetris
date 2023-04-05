@@ -1,5 +1,7 @@
 #include "tetriswindow.h"
 #include "tetrisboard.h"
+#include "playerwidget.h"
+#include "multiplayerblock.h"
 #include <QPainter>
 #include <QtWidgets>
 #include <QCoreApplication>
@@ -7,6 +9,8 @@
 #include <QLabel>
 #include <QLCDNumber>
 #include <QPushButton>
+#include <QHBoxLayout>
+
 TetrisWindow::TetrisWindow(QWidget *parent) : QWidget(parent), board(new TetrisBoard) //le constructeur crée la grille et l'endroit où l'on indiquera la prochaine pièce
 {
    /*La classe QLabel est une classe de widget qui peut afficher du texte ou une image. Dans ce cas, elle est utilisée pour afficher du texte, et les méthodes setFrameStyle et setAlignment sont utilisées pour configurer l'apparence du widget. La méthode setFont est utilisée pour spécifier la police utilisée pour afficher le texte.
@@ -59,8 +63,11 @@ TetrisWindow::TetrisWindow(QWidget *parent) : QWidget(parent), board(new TetrisB
     connect(quit , &QPushButton::clicked, qApp, &QCoreApplication::quit);
     connect(pause, &QPushButton::clicked, board, &TetrisBoard::pauseGame);
     connect(board, &TetrisBoard::scoreChange, score, qOverload<int>(&QLCDNumber::display));
+
     connect(board, &TetrisBoard::lignesChange, lignes, qOverload<int>(&QLCDNumber::display));
 
+
+    mlayout = new QHBoxLayout;
     QGridLayout *layout = new QGridLayout; //need to change some values here.
 
     layout->addWidget(createLabel(tr("PROCHAINE PIECE")), 0, 0);
@@ -75,13 +82,24 @@ TetrisWindow::TetrisWindow(QWidget *parent) : QWidget(parent), board(new TetrisB
     layout->addWidget(lignes, 3, 2);
     layout->addWidget(quit, 4, 2);
     layout->addWidget(pause, 5, 2);
-    setLayout(layout);
+
+    mlayout->addLayout(layout);
+
+    setLayout(mlayout);
 
     setWindowTitle(tr("TETRIS"));
     resize(600, 350);
     setStyleSheet("background-color: #2aa198;");
+    qDebug() << "init";
+
+}
 
 
+void TetrisWindow::Connect(QString name,QString hostname,int port)
+{
+    my_block = new MultiplayerBlock(name, hostname, port);
+    connect(board, &TetrisBoard::scoreChange, my_block, &MultiplayerBlock::SendToServer);
+    mlayout->addWidget(my_block);
 }
 
 
