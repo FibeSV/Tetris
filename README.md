@@ -55,23 +55,45 @@ Le jeu contient deux modules : le _serveur_ et le _jeu principal_.
 
 Dans cette approche, la classe _TetrisBoard_ est la plus complexe, car elle gère la logique du jeu et le rendu. 
 
+## Multiplayer
+Nous avons choisi d'utiliser une connexion TCP pour plusieurs raisons, qui sont principalement liées aux caractéristiques inhérentes du protocole TCP et à sa pertinence pour les applications de jeu en ligne comme Tetris.
+
+* _Fiabilité_ : Le protocole TCP est un protocole orienté connexion, ce qui signifie qu'il établit une connexion fiable entre les deux parties avant de commencer la communication. Il garantit que les données envoyées par une partie seront reçues par l'autre partie dans le bon ordre et sans erreurs. Cette fiabilité est cruciale pour les jeux en ligne, car elle permet de s'assurer que toutes les actions des joueurs sont correctement transmises et synchronisées entre les clients et le serveur.
+
+* _Contrôle de flux_ : TCP implémente un mécanisme de contrôle de flux qui ajuste automatiquement la vitesse à laquelle les données sont envoyées en fonction de la capacité du réseau et du récepteur. Cela permet d'éviter l'engorgement du réseau et garantit que les clients et le serveur communiquent de manière efficace, ce qui est important pour maintenir une expérience de jeu fluide et réactive.
+
+* _Gestion de la congestion_ : TCP dispose également d'une gestion intégrée de la congestion qui permet d'éviter l'encombrement du réseau en ajustant la vitesse de transmission des données en fonction des conditions du réseau. Cette fonctionnalité contribue à maintenir une latence faible et une expérience de jeu de qualité, même lorsque le réseau est encombré.
+
+* _Facilité d'utilisation_ : TCP est largement utilisé et bien documenté, ce qui facilite son implémentation et sa maintenance. De plus, les API et les bibliothèques de programmation, telles que Qt, fournissent des abstractions de haut niveau pour travailler avec TCP, simplifiant encore le développement d'applications basées sur ce protocole.
+
+En somme, le choix d'une connexion TCP pour notre jeu Tetris en ligne repose sur la fiabilité, le contrôle de flux, la gestion de la congestion et la facilité d'utilisation offerts par ce protocole. Ces caractéristiques sont essentielles pour assurer une expérience de jeu en ligne de qualité et un échange de données efficace entre les clients et le serveur.
+
+### La connexion entre le serveur et le bloc multijoueur fonctionne de la manière suivante:
+
+* Dans la classe _MultiplayerBlock_, un objet QTcpSocket est créé pour établir une connexion au serveur. Le socket est connecté à l'hôte (serveur) en utilisant l'adresse IP (hostname) et le port spécifiés. Une fois la connexion établie, des signaux sont connectés aux slots appropriés. Le signal readyRead est connecté au slot slotReadyRead, qui est déclenché lorsque des données sont disponibles pour être lues depuis le serveur. Le signal disconnected est connecté au slot deleteLater qui supprime le socket lorsqu'il est déconnecté.
+
+* Dans _la classe Server_, la méthode incomingConnection est appelée chaque fois qu'un nouveau client tente de se connecter au serveur. Cette méthode crée un nouveau socket pour le client, en utilisant le descripteur de socket reçu. Le serveur connecte également les signaux aux slots appropriés pour gérer les données entrantes. Le signal readyRead est connecté au slot slotReadyRead qui lit les données envoyées par les clients et les diffuse à tous les autres clients connectés.
+
+Lorsque des données sont disponibles pour être lues dans le bloc multijoueur, la méthode slotReadyRead est déclenchée. Les données sont extraites du flux, et le score et le pseudo du joueur sont mis à jour en fonction des données reçues. Si un nouveau joueur se connecte, un nouveau widget est créé pour ce joueur, et il est ajouté à la liste des joueurs.
+
+De manière similaire, lorsque le serveur reçoit des données d'un client, la méthode slotReadyRead est déclenchée. Les données sont extraites et envoyées à tous les clients connectés via la méthode SendToClient.
 
 
 ## Screenshots
 
-![main-menu](images\main_menu.jpg)
+![main-menu](/images/main_menu.jpg)
 
 
-![single-player](images\singleplayer.jpg)
+![single-player](/images/singleplayer.jpg)
 
 
-![multiplayer:player1](images\player1.jpg)
+![multiplayer:player1](/images/player1.jpg)
 
-![multiplayer:player2](images\player2.jpg)
+![multiplayer:player2](/images/player2.jpg)
 
-![multiplayer:player3](images\player3.jpg)
+![multiplayer:player3](/images/player3.jpg)
 
-![multiplayer:player4](images\player4.jpg)
+![multiplayer:player4](/images/player4.jpg)
 
 ## Controls
 
@@ -83,12 +105,9 @@ Dans cette approche, la classe _TetrisBoard_ est la plus complexe, car elle gèr
 | c           | Holds the piece                           |
 | Up/Shift    | Rotates piece counter-clockwise/clockwise |
 
-
-## Dependencies
-
-
-
 ## Usage
+
+
 
 
 
