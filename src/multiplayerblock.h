@@ -24,9 +24,10 @@ class MultiplayerBlock : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MultiplayerBlock(QWidget *parent = nullptr);
+    explicit MultiplayerBlock(QString name="player1",QString hostname="127.0.0.1",int port=2323, QWidget *parent = nullptr);
     ~MultiplayerBlock();
     void SendToServer(int num);
+    void set_name(QString name);
 
 signals:
         void newMessage(QString);
@@ -34,7 +35,6 @@ signals:
 public slots:
         void slotReadyRead();
 private slots:
-
         void on_connectB_clicked();
 
 

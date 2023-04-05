@@ -409,8 +409,8 @@ void TetrisBoard::createNewPiece()
 
     if (isGameOver) {
         timer.stop();
-        QMessageBox::information(this, tr("Game Over"),
-            tr("Vous avez Perdu"));
+        //QMessageBox::information(this, tr("Game Over"),
+        //    tr("Vous avez Perdu"));
     }
 }
 

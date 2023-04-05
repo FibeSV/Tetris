@@ -6,20 +6,21 @@
 #include <QGridLayout>
 
 
-MultiplayerBlock::MultiplayerBlock(QWidget *parent)
+MultiplayerBlock::MultiplayerBlock(QString name,QString hostname,int port,  QWidget *parent)
     : QWidget{parent}
 {
     //playerwidget newplayer;
     //playerslist->push_back(newplayer);
+    this->name = name;
 
     socket = new QTcpSocket(this);
     connect(socket, &QTcpSocket::readyRead, this, &MultiplayerBlock::slotReadyRead);
     connect(socket, &QTcpSocket::disconnected, socket, &QTcpSocket::deleteLater);
     nextBlockSize = 0;
 
-    name = "playern1";
+    //name = "playern1";
 
-    socket->connectToHost("127.0.0.1", 2323);
+    socket->connectToHost(hostname, port);
 
 
     if(socket->waitForConnected())
@@ -57,6 +58,11 @@ void MultiplayerBlock::SendToServer(int num)
     socket->write(Data);
 }
 
+void MultiplayerBlock::set_name(QString name)
+{
+    this->name = name;
+}
+
 void MultiplayerBlock::slotReadyRead()
 {
     socket = (QTcpSocket*)sender();
@@ -83,19 +89,28 @@ void MultiplayerBlock::slotReadyRead()
             bool flag = false;
             for (int i =0; i<playerslist.size(); i++){
                 if (nickname==playerslist[i]->get_name()){
-                    playerslist[i]->set_name(nickname);
+                    playerslist[i]->set_score(num);
+
+                    flag= true;
+                    break;
+                }
+                if (playerslist[i]->get_name()=="TOI" and nickname==this->name){
                     playerslist[i]->set_score(num);
 
                     flag= true;
                     break;
                 }
             }
+
             if (!flag){
                 playerwidget *newp = new playerwidget;
-                newp->set_name(nickname);
+                if (nickname==this->name)
+                    newp->set_name("TOI");
+                else
+                    newp->set_name(nickname);
                 newp->set_score(num);
                 playerslist.push_back(newp);
-                qDebug() <<"player added" << nickname;
+                qDebug() <<"player was added" << nickname;
                 layout->addWidget(newp);
             }
             //test_score->setText(QString::number(num));
