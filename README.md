@@ -103,7 +103,7 @@ De manière similaire, lorsque le serveur reçoit des données d'un client, la m
 | Down        | Soft-drop                                 |
 | Space       | Hard-drop                                 |
 | c           | Holds the piece                           |
-| Up/Shift    | Rotates piece counter-clockwise/clockwise |
+| Up          | Rotates piece cclockwise |
 
 ## How to compile:
 ### Étapes pour compiler et exécuter le projet
